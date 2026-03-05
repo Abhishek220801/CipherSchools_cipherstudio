@@ -1,1 +1,1 @@
-export const BASE_URL = 'https://tahoe-keno-gem-reasons.trycloudflare.com';
+export const BASE_URL = 'http://localhost:3000';

@@ -35,7 +35,7 @@ const authMiddleware = asyncHandler(async (req, res, next) => {
     token = await createToken({ ip: reqIp, userAgent: reqUserAgent }, res);
   }
 
-  const { ip, userAgent } = jwt.verify(token, process.env.JWT_SECRET);
+  const { ip, userAgent } = await jwt.verify(token, process.env.JWT_SECRET);
 
   if (ip !== reqIp || userAgent !== reqUserAgent) {
     throw new ApiError(401, "Invalid user session");

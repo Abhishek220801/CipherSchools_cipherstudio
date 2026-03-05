@@ -1,5 +1,5 @@
 import { Editor } from "@monaco-editor/react"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { BASE_URL } from "./utils/constants.js"
 import axios from "axios"
 
@@ -11,6 +11,7 @@ function App() {
   const [expiry, setExpiry] = useState('')
   const [dbLoading, setDBLoading] = useState(false)
   const [queryLoading, setQueryLoading] = useState(false)
+  const timer = useRef(null);
 
   async function loadDB() {
     try {
@@ -39,14 +40,16 @@ function App() {
 
   const calcExpiry = (expInISO) => {
     const expires = new Date(expInISO)
-
-    const timer = setInterval(() => {
+    if(timer.current){
+      clearInterval(timer.current);
+      timer.current = null;
+    }
+    timer.current = setInterval(() => {
       const now = new Date()
       const diff = expires.getTime() - now.getTime()
-
       if (diff <= 0) {
         setExpiry("Expired")
-        clearInterval(timer)
+        clearInterval(timer.current)
         return
       }
 
@@ -70,7 +73,6 @@ function App() {
         { withCredentials: true },
       )
       setResult(res.data)
-      calcExpiry(res.data.expires)
     } catch (err) {
       setError(err.response?.data?.message || "Could not reach server.")
     } finally {

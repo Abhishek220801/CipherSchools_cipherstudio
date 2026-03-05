@@ -8,7 +8,5 @@ import './index.css'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <App />
-    {/* <Practice/> */}
-    {/* <Login/> */}
   </StrictMode>,
 )
