@@ -11,7 +11,7 @@ const app = express();
 app.set("trust proxy", true);
 app.use(
   cors({
-    origin: process.env.ORIGIN || "http://localhost:5173",
+    origin: process.env.ORIGIN || ("http://localhost:5173", "https://cipher-schools-cipherstudio.vercel.app"),
     credentials: true,
   }),
 );
